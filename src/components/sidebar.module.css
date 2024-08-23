@@ -1,0 +1,23 @@
+
+.navList{
+   list-style: none;
+}
+
+.navList a{
+    color: gray;
+}
+
+.active{
+    color: red !important;
+}
+
+@media (max-width:425px) {
+    nav{
+        height: 20svh !important;
+        margin-bottom: 10px;
+    }
+    nav ul{
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
