@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Modal.module.css";
 import SaveButton from "./SaveButton";
 
 const Modal = ({ feedback, handleClose, onSaveSuccess }) => {
-  const [feedbackType, setFeedbackType] = useState("down");
+  // Initialize state with feedback.feedback_type or default to "down"
+  const [feedbackType, setFeedbackType] = useState(feedback.feedback_type);
+
+  // Update state when feedback prop changes
+  useEffect(() => {
+    setFeedbackType(feedback.feedback_type || "down");
+  }, [feedback.feedback_type]);
 
   const handleFeedbackTypeChange = (event) => {
     setFeedbackType(event.target.value);
@@ -47,7 +53,7 @@ const Modal = ({ feedback, handleClose, onSaveSuccess }) => {
               id="prompt"
               value={feedback?.prompt || ""}
               style={{ resize: "none" }}
-              readOnly // Use readOnly instead of disabled
+              readOnly
             ></textarea>
             <br />
 
@@ -58,7 +64,7 @@ const Modal = ({ feedback, handleClose, onSaveSuccess }) => {
               name="response"
               id="response"
               value={feedback?.response || ""}
-              readOnly // Use readOnly instead of disabled
+              readOnly
             ></textarea>
 
             <br />
@@ -67,21 +73,22 @@ const Modal = ({ feedback, handleClose, onSaveSuccess }) => {
               className="ms-2"
               name="feedback"
               id="feedback"
+              value={feedbackType} // Use state value
               onChange={handleFeedbackTypeChange}
             >
-              {feedback.feedback_type === "down" ? (
+              {feedbackType === "down" ? (
                 <>
-                  <option value="down" selected>
+                  <option value="up">up</option>{" "}
+                  <option value="down" disabled>
                     down
                   </option>
-                  <option value="up">up</option>
                 </>
               ) : (
                 <>
-                  <option value="up" selected>
+                  <option value="down">down</option>{" "}
+                  <option value="up" disabled>
                     up
                   </option>
-                  <option value="down">down</option>
                 </>
               )}
             </select>
@@ -90,7 +97,7 @@ const Modal = ({ feedback, handleClose, onSaveSuccess }) => {
             <SaveButton
               id={feedback?.id}
               feedbackType={feedbackType}
-              onSaveSuccess={onSaveSuccess} // Pass the callback function to SaveButton
+              onSaveSuccess={onSaveSuccess}
             />
           </div>
         </div>
