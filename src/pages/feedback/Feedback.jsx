@@ -4,6 +4,7 @@ import FeedbackTable from "../../components/FeedbackTable";
 import Modal from "../../components/Modal";
 import SuccessModal from "../../components/SuccessModal";
 import DeleteConfirmationModal from "../../components/DeleteModal"; // Import your new modal component
+import { deleteFeedback } from "../../api/api_config_dev";
 
 const Feedback = () => {
   const [showModal, setShowModal] = useState(false);
@@ -43,7 +44,7 @@ const Feedback = () => {
 
   const handleDeleteConfirmation = async () => {
     try {
-      await fetch(`http://localhost:5000/feedbacks/${feedbackToDelete.id}`, {
+      await fetch(`${deleteFeedback.url}/${feedbackToDelete.id}`, {
         method: 'DELETE',
       });
       setSuccessMessage("Feedback deleted successfully!");

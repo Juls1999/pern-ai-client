@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { getAllFeedbacks } from '../api/api_config_dev';
 
 const FeedbackTable = ({ onEditClick, onDeleteClick, refreshKey }) => {
   const [feedbacks, setFeedbacks] = useState([]);
 
   const fetchFeedbacks = async () => {
     try {
-      const response = await fetch("http://localhost:5000/feedbacks");
+      const response = await fetch(`${getAllFeedbacks.url}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

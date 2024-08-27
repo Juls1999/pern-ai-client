@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./ChatBox.module.css";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
+import { createFeedback, sendPrompt } from "../api/api_config_dev";
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
@@ -11,7 +12,7 @@ const ChatBox = () => {
   // Function to send feedback data to the server
   const sendFeedbackToServer = async (prompt, response, feedback_type) => {
     try {
-      const result = await fetch("http://localhost:5000/feedbacks", {
+      const result = await fetch(`${createFeedback.url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -41,7 +42,7 @@ const ChatBox = () => {
       setInputValue("");
 
       try {
-        const response = await fetch("http://localhost:5000/api/message", {
+        const response = await fetch(`${sendPrompt.url}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userMessage: inputValue }),

@@ -1,9 +1,10 @@
 import React from 'react';
+import {updateFeedback} from '../api/api_config_dev';
 
 const SaveButton = ({ feedbackType, id, onSaveSuccess }) => {
   const handleClick = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/feedbacks/${id}`, {
+      const response = await fetch(`${updateFeedback.url}/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
